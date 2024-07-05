@@ -1,0 +1,71 @@
+﻿@model U4_W2_D3.Models.Booking
+@{
+    ViewData["Title"] = "Prenotazione Biglietti";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Prenotazione Biglietti</h1>
+</div>
+
+<form asp-action="BookTicket" method="post">
+    @*Nome*@
+    <div>
+
+        <label for="FirstName">Nome</label>
+        <input type="text" id="FirstName" name="FirstName" required />
+    </div>
+    @*Cognome*@
+    <div>
+
+        <label for="LastName">Cognome</label>
+        <input type="text" id="LastName" name="LastName" required />
+    </div>
+    @*Sala*@
+    <div>
+
+        <label for="Hall">Sala:</label>
+        <select id="Hall" name="Hall" required>
+            @if (ViewBag.Halls == null || ViewBag.Halls.Count == 0)
+            {
+                <option value="">Nessuna sala disponibile</option>
+            }
+            else
+            {
+                foreach (var hall in ViewBag.Halls)
+                {
+                    <option value="@hall.Id">@hall.Name</option>
+                }
+            }
+        </select>
+    </div>
+    @*Biglietto*@
+    <div>
+        <label for="TicketType">Tipo di biglietto:</label>
+        <select id="TicketType" name="TicketType" required>
+            <option value="1">Intero</option>
+            <option value="2">Ridotto</option>
+        </select>
+    </div>
+    <button type="submit">Prenota</button>
+</form>
+
+<h2>Statistiche delle Sale</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Sala</th>
+            <th>Biglietti Venduti</th>
+            <th>Biglietti Ridotti Venduti</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hall in ViewBag.Halls)
+        {
+            <tr>
+                <td>@hall.Name</td>
+                <td>@hall.TicketsSold</td>
+                <td>@hall.ReducedTicketsSold</td>
+            </tr>
+        }
+    </tbody>
+</table>
